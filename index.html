@@ -127,18 +127,18 @@
     <div id="main-app-content" class="hidden flex-1 flex flex-col">
         <!-- Top Navigation Bar -->
         <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-xs">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-                <div class="flex items-center space-x-4">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
+                <div class="flex items-center space-x-3 sm:space-x-4">
                     <!-- Official MY World Logo Integration with local fallback -->
-                    <div class="flex-shrink-0 bg-slate-50 p-1.5 rounded-xl border border-slate-100 shadow-xs">
+                    <div class="flex-shrink-0 bg-slate-50 p-1 sm:p-1.5 rounded-xl border border-slate-100 shadow-xs">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRySB9rihzajzll-qcyUjyfeH-pZqoAcxOevw&s" 
                              alt="MY World Logo" 
-                             class="h-11 sm:h-12 w-auto object-contain rounded-lg"
+                             class="h-9 sm:h-12 w-auto object-contain rounded-lg"
                              onerror="this.onerror=null; this.src='https://placehold.co/120x48/f97316/ffffff?text=MY+World';">
                     </div>
                     <div>
-                        <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 leading-tight tracking-tight">Programmes & Quality Assurance</h1>
-                        <p class="text-[10px] sm:text-xs text-slate-500 font-semibold tracking-wide uppercase">AI-Assisted Solutions</p>
+                        <h1 class="text-sm sm:text-lg md:text-xl font-extrabold text-slate-900 leading-tight tracking-tight">Programmes & Quality Assurance</h1>
+                        <p class="text-[8px] sm:text-xs text-slate-500 font-semibold tracking-wide uppercase">AI-Assisted Solutions</p>
                     </div>
                 </div>
             </div>
@@ -154,7 +154,7 @@
                     
                     <p class="col-span-2 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 md:mb-3 md:block hidden">Getting Started</p>
                     
-                    <button onclick="switchTab('overview')" id="nav-overview" class="col-span-2 w-full text-left px-3 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-3 transition touch-manipulation min-h-[44px] min-w-0 nav-active">
+                    <button onclick="switchTab('overview')" id="nav-overview" class="col-span-2 w-full text-left px-2 sm:px-4 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs md:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-2 sm:space-x-3 transition touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0 nav-active">
                         <svg class="w-5 h-5 flex-shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                         </svg>
@@ -164,26 +164,26 @@
                     <p class="col-span-2 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest pt-3 mb-1 md:mb-3 md:block hidden">Tools</p>
 
                     <!-- Tool Modules with Locked Horizontal alignment (same-line icon/badge) and wrap text -->
-                    <button onclick="switchTab('automa')" id="nav-automa" class="w-full text-left px-3 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-3 transition touch-manipulation min-h-[44px] min-w-0">
+                    <button onclick="switchTab('automa')" id="nav-automa" class="w-full text-left px-2 sm:px-4 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs md:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-2 sm:space-x-3 transition touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0">
                         <span class="w-5 h-5 rounded-md bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center font-bold text-[10px] flex-shrink-0">A</span>
                         <span class="sidebar-text flex-1 min-w-0 break-words whitespace-normal text-left">Automa</span>
                     </button>
 
-                    <button onclick="switchTab('powerautomate')" id="nav-powerautomate" class="w-full text-left px-3 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-3 transition touch-manipulation min-h-[44px] min-w-0">
+                    <button onclick="switchTab('powerautomate')" id="nav-powerautomate" class="w-full text-left px-2 sm:px-4 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs md:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-2 sm:space-x-3 transition touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0">
                         <svg class="w-5 h-5 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2L2 22h20L12 2z"></path>
                         </svg>
                         <span class="sidebar-text flex-1 min-w-0 break-words whitespace-normal text-left">Power Automate</span>
                     </button>
 
-                    <button onclick="switchTab('vba')" id="nav-vba" class="w-full text-left px-3 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-3 transition touch-manipulation min-h-[44px] min-w-0">
+                    <button onclick="switchTab('vba')" id="nav-vba" class="w-full text-left px-2 sm:px-4 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs md:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-2 sm:space-x-3 transition touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0">
                         <svg class="w-5 h-5 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
                         <span class="sidebar-text flex-1 min-w-0 break-words whitespace-normal text-left">Visual Basic for Applications (VBA)</span>
                     </button>
 
-                    <button onclick="switchTab('gas')" id="nav-gas" class="w-full text-left px-3 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-3 transition touch-manipulation min-h-[44px] min-w-0">
+                    <button onclick="switchTab('gas')" id="nav-gas" class="w-full text-left px-2 sm:px-4 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs md:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-2 sm:space-x-3 transition touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0">
                         <svg class="w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
                         </svg>
@@ -192,7 +192,7 @@
 
                     <p class="col-span-2 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest pt-3 mb-1 md:mb-3 md:block hidden">Prompting Guide</p>
 
-                    <button onclick="switchTab('builder')" id="nav-builder" class="col-span-2 w-full text-left px-3 sm:px-4 py-3.5 rounded-xl text-xs sm:text-sm font-bold bg-indigo-50/50 text-indigo-600 hover:bg-indigo-50 border border-indigo-100 flex items-center space-x-3 transition shadow-xs touch-manipulation min-h-[44px] min-w-0">
+                    <button onclick="switchTab('builder')" id="nav-builder" class="col-span-2 w-full text-left px-2 sm:px-4 py-2.5 sm:py-3.5 rounded-xl text-[10px] sm:text-xs md:text-sm font-bold bg-indigo-50/50 text-indigo-600 hover:bg-indigo-50 border border-indigo-100 flex items-center space-x-2 sm:space-x-3 transition shadow-xs touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0">
                         <svg class="w-5 h-5 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
@@ -211,7 +211,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                             
                             <!-- Automa Dashboard Card -->
-                            <div onclick="switchTab('automa')" class="module-card-transition bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-brand-orange hover:shadow-md hover:-translate-y-0.5">
+                            <div onclick="switchTab('automa')" class="module-card-transition bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-brand-orange hover:shadow-md hover:-translate-y-0.5">
                                 <div class="flex items-center justify-between mb-3">
                                     <h4 class="font-bold text-slate-900 text-sm sm:text-base">Automa</h4>
                                     <div class="bg-slate-950 text-white w-7 h-7 rounded-lg flex items-center justify-center font-black text-xs shadow-xs">A</div>
@@ -221,7 +221,7 @@
                             </div>
 
                             <!-- Power Automate Card -->
-                            <div onclick="switchTab('powerautomate')" class="module-card-transition bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-brand-orange hover:shadow-md hover:-translate-y-0.5">
+                            <div onclick="switchTab('powerautomate')" class="module-card-transition bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-brand-orange hover:shadow-md hover:-translate-y-0.5">
                                 <div class="flex items-center justify-between mb-3">
                                     <h4 class="font-bold text-slate-900 text-sm sm:text-base">Power Automate</h4>
                                     <svg class="w-6 h-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"></path></svg>
@@ -231,7 +231,7 @@
                             </div>
 
                             <!-- VBA Card -->
-                            <div onclick="switchTab('vba')" class="module-card-transition bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-brand-orange hover:shadow-md hover:-translate-y-0.5">
+                            <div onclick="switchTab('vba')" class="module-card-transition bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-brand-orange hover:shadow-md hover:-translate-y-0.5">
                                 <div class="flex items-center justify-between mb-3">
                                    <h4 class="font-bold text-slate-900 text-sm sm:text-base">Visual Basic for Applications (VBA)</h4>
                                     <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -241,10 +241,10 @@
                             </div>
 
                             <!-- GAS Card -->
-                            <div onclick="switchTab('gas')" class="module-card-transition bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-brand-orange hover:shadow-md hover:-translate-y-0.5">
+                            <div onclick="switchTab('gas')" class="module-card-transition bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-brand-orange hover:shadow-md hover:-translate-y-0.5">
                                 <div class="flex items-center justify-between mb-3">
                                     <h4 class="font-bold text-slate-900 text-sm sm:text-base">Google Apps Script (GAS)</h4>
-                                    <svg class="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                                    <svg class="w-6 h-6 text-amber-500" fill="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
                                 </div>
                                 <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">A built-in coding tool within Google to automate tasks across Docs, Sheets and Gmail, and create webpages based on content within these files.</p>
                                 <span class="inline-flex items-center text-xs font-semibold text-brand-orange mt-4 hover:underline">View tool &rarr;</span>
@@ -256,7 +256,7 @@
 
                 <!-- MODULE 1: AUTOMA TAB -->
                 <div id="tab-automa" class="space-y-6 hidden">
-                    <div class="bg-white p-5 sm:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6 sm:space-y-8">
+                    <div class="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-4 sm:space-y-6 md:space-y-8">
                         <!-- Heading Header -->
                         <div class="flex items-center space-x-3.5 border-b border-slate-100 pb-5">
                             <div class="bg-slate-950 text-white w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center font-black text-lg sm:text-xl shadow-md shadow-slate-950/20">A</div>
@@ -318,7 +318,7 @@
 
                 <!-- MODULE 2: POWER AUTOMATE TAB -->
                 <div id="tab-powerautomate" class="space-y-6 hidden">
-                    <div class="bg-white p-5 sm:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6 sm:space-y-8">
+                    <div class="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-4 sm:space-y-6 md:space-y-8">
                         <!-- Heading Header -->
                         <div class="flex items-center space-x-3.5 border-b border-slate-100 pb-5">
                             <svg class="w-11 h-11 sm:w-12 sm:h-12 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"></path></svg>
@@ -355,7 +355,7 @@
 
                         <!-- 3. Security & Governance -->
                         <div class="border-t border-slate-100 pt-6 space-y-3">
-                            <h4 class="text-xs font-bold text-rose-800 uppercase tracking-widest flex items-center space-x-2 bg-rose-50 border border-rose-100 p-3 rounded-xl">
+                            <h4 class="text-xs sm:text-sm font-bold text-rose-800 uppercase tracking-widest flex items-center space-x-2 bg-rose-50 border border-rose-100 p-3 rounded-xl">
                                 <svg class="w-4 h-4 text-rose-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                                 </svg>
@@ -379,7 +379,7 @@
 
                 <!-- MODULE 3: VBA TAB -->
                 <div id="tab-vba" class="space-y-6 hidden">
-                    <div class="bg-white p-5 sm:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6 sm:space-y-8">
+                    <div class="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-4 sm:space-y-6 md:space-y-8">
                         <!-- Heading Header -->
                         <div class="flex items-center space-x-3.5 border-b border-slate-100 pb-5">
                             <svg class="w-11 h-11 sm:w-12 sm:h-12 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -416,7 +416,7 @@
 
                         <!-- 3. Security & Governance -->
                         <div class="border-t border-slate-100 pt-6 space-y-3">
-                            <h4 class="text-xs font-bold text-rose-800 uppercase tracking-widest flex items-center space-x-2 bg-rose-50 border border-rose-100 p-3 rounded-xl">
+                            <h4 class="text-xs sm:text-sm font-bold text-rose-800 uppercase tracking-widest flex items-center space-x-2 bg-rose-50 border border-rose-100 p-3 rounded-xl">
                                 <svg class="w-4 h-4 text-rose-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                                 </svg>
@@ -424,7 +424,7 @@
                             </h4>
                             <ul class="text-xs sm:text-sm text-slate-600 space-y-2 list-disc pl-5 leading-relaxed">
                                 <li>VBA runs within files in your laptop. It does not transmit data to external hosts.</li>
-                                <li>The Developer tab is not available in the M365 free Education license. You have to upgrade your license to use this tool. <strong>Request upgrade to M365 Premium through Pillar Heads → Pillar Heads to put up request to MIS.</strong></li>
+                                <li>The Developer tab is not available in the M365 free Education license. You have to upgrade your license to use this tool. <strong>Request upgrade to M365 Premium through Pillar Heads &rarr; Pillar Heads to put up request to MIS.</strong></li>
                             </ul>
                         </div>
 
@@ -440,7 +440,7 @@
 
                 <!-- MODULE 4: GAS TAB -->
                 <div id="tab-gas" class="space-y-6 hidden">
-                    <div class="bg-white p-5 sm:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6 sm:space-y-8">
+                    <div class="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-4 sm:space-y-6 md:space-y-8">
                         <!-- Heading Header -->
                         <div class="flex items-center space-x-3.5 border-b border-slate-100 pb-5">
                             <svg class="w-11 h-11 sm:w-12 sm:h-12 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
@@ -476,7 +476,7 @@
 
                         <!-- 3. Security & Governance -->
                         <div class="border-t border-slate-100 pt-6 space-y-3">
-                            <h4 class="text-xs font-bold text-rose-800 uppercase tracking-widest flex items-center space-x-2 bg-rose-50 border border-rose-100 p-3 rounded-xl">
+                            <h4 class="text-xs sm:text-sm font-bold text-rose-800 uppercase tracking-widest flex items-center space-x-2 bg-rose-50 border border-rose-100 p-3 rounded-xl">
                                 <svg class="w-4 h-4 text-rose-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                                 </svg>
@@ -499,7 +499,7 @@
 
                 <!-- DYNAMIC PROMPT BUILDER -->
                 <div id="tab-builder" class="space-y-6 hidden">
-                    <div class="bg-white p-5 sm:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6">
+                    <div class="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6">
                         
                         <!-- Header -->
                         <div class="border-b border-slate-100 pb-5">
@@ -516,7 +516,7 @@
                         <div class="max-w-4xl mx-auto space-y-8">
                             
                             <!-- Block 1: Tool Dropdown Selector & 4-Step Input Form -->
-                            <div class="space-y-6 bg-slate-50/50 p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs">
+                            <div class="space-y-6 bg-slate-50/50 p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-xs">
                                 
                                 <!-- Tool Dropdown Selector -->
                                 <div class="bg-white p-4 rounded-xl border border-slate-200">
@@ -577,14 +577,14 @@
                             </div>
 
                             <!-- Block 2: Compiled Dynamic Prompt Output -->
-                            <div class="bg-slate-900 text-slate-100 rounded-2xl p-5 sm:p-6 flex flex-col justify-between shadow-md border border-slate-800 space-y-4">
+                            <div class="bg-slate-900 text-slate-100 rounded-2xl p-4 sm:p-6 flex flex-col justify-between shadow-md border border-slate-800 space-y-4">
                                 <div class="space-y-3">
                                     <div class="flex items-center justify-between border-b border-slate-800 pb-3">
                                         <span class="text-xs font-bold text-brand-orange uppercase tracking-wider">Compiled Prompt</span>
                                     </div>
                                     
                                     <!-- Live Output Container -->
-                                    <div id="output-text" class="text-[11px] sm:text-xs font-mono leading-relaxed whitespace-pre-wrap select-all max-h-[220px] md:max-h-[280px] overflow-y-auto text-slate-300 pr-1 scrollbar-thin">
+                                    <div id="output-text" class="text-[10px] sm:text-xs font-mono leading-relaxed whitespace-pre-wrap select-all max-h-[220px] md:max-h-[280px] overflow-y-auto text-slate-300 pr-1 scrollbar-thin break-all whitespace-pre-wrap">
                                         <!-- Dynamically generated -->
                                     </div>
                                 </div>
@@ -597,7 +597,7 @@
                             </div>
 
                             <!-- Block 3: Pre-packaged Troubleshooting & Style Helper Prompts -->
-                            <div id="additional-prompts-container" class="space-y-4 bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+                            <div id="additional-prompts-container" class="space-y-4 bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs">
                                 <div class="border-b border-slate-100 pb-3">
                                     <h4 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">Additional Prompts</h4>
                                 </div>
@@ -730,7 +730,7 @@ Run a structured Chain-of-Thought debugging trace:<br>
                 
                 // Retain session login state
                 sessionStorage.setItem('pqa_portal_unlocked', 'true');
-                showToast("Welcome to the MYW PQA AI Portal!");
+                showToast("Welcome to the PQA Automation Portal!");
             } else {
                 // Display incorrect prompt and reset input field
                 errorMsg.classList.remove('hidden');
@@ -754,13 +754,19 @@ Run a structured Chain-of-Thought debugging trace:<br>
 
             // Remove nav-active styling states from all navigation buttons
             document.querySelectorAll('[id^="nav-"]').forEach(el => {
-                el.classList.remove('nav-active');
+                el.className = "w-full text-left px-2 sm:px-4 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs md:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-2 sm:space-x-3 transition touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0";
             });
             
             // Apply nav-active styling to the selected button
             const activeNav = document.getElementById('nav-' + tabId);
             if (activeNav) {
-                activeNav.classList.add('nav-active');
+                if (tabId === 'overview') {
+                    activeNav.className = "col-span-2 w-full text-left px-2 sm:px-4 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs md:text-sm font-medium transition nav-active touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0";
+                } else if (tabId === 'builder') {
+                    activeNav.className = "col-span-2 w-full text-left px-2 sm:px-4 py-2.5 sm:py-3.5 rounded-xl text-[10px] sm:text-xs md:text-sm font-bold transition nav-active border border-orange-200 shadow-xs touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0";
+                } else {
+                    activeNav.className = "w-full text-left px-2 sm:px-4 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs md:text-sm font-medium transition nav-active touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0";
+                }
             }
             
             // Scroll back to top for optimal viewport experience
