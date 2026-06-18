@@ -130,7 +130,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
                 <div class="flex items-center space-x-3 sm:space-x-4">
                     <!-- Official MY World Logo Integration with local fallback -->
-                    <div class="flex-shrink-0 bg-slate-50 p-1 sm:p-1.5 rounded-xl border border-slate-100 shadow-xs">
+                    <div class="flex-shrink-0 bg-slate-50 p-1.5 rounded-xl border border-slate-100 shadow-xs">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRySB9rihzajzll-qcyUjyfeH-pZqoAcxOevw&s" 
                              alt="MY World Logo" 
                              class="h-9 sm:h-12 w-auto object-contain rounded-lg"
@@ -752,20 +752,20 @@ Run a structured Chain-of-Thought debugging trace:<br>
                 activeTab.classList.remove('hidden');
             }
 
-            // Remove nav-active styling states from all navigation buttons
+            // Remove nav-active styling states from all navigation buttons and restore horizontal flex layouts
             document.querySelectorAll('[id^="nav-"]').forEach(el => {
                 el.className = "w-full text-left px-2 sm:px-4 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs md:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-2 sm:space-x-3 transition touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0";
             });
             
-            // Apply nav-active styling to the selected button
+            // Apply nav-active styling to the selected button while maintaining explicit flex alignment
             const activeNav = document.getElementById('nav-' + tabId);
             if (activeNav) {
                 if (tabId === 'overview') {
-                    activeNav.className = "col-span-2 w-full text-left px-2 sm:px-4 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs md:text-sm font-medium transition nav-active touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0";
+                    activeNav.className = "col-span-2 w-full text-left px-2 sm:px-4 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs md:text-sm font-medium transition nav-active touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0 flex items-center space-x-2 sm:space-x-3";
                 } else if (tabId === 'builder') {
-                    activeNav.className = "col-span-2 w-full text-left px-2 sm:px-4 py-2.5 sm:py-3.5 rounded-xl text-[10px] sm:text-xs md:text-sm font-bold transition nav-active border border-orange-200 shadow-xs touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0";
+                    activeNav.className = "col-span-2 w-full text-left px-2 sm:px-4 py-2.5 sm:py-3.5 rounded-xl text-[10px] sm:text-xs md:text-sm font-bold transition nav-active border border-orange-200 shadow-xs touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0 flex items-center space-x-2 sm:space-x-3";
                 } else {
-                    activeNav.className = "w-full text-left px-2 sm:px-4 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs md:text-sm font-medium transition nav-active touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0";
+                    activeNav.className = "w-full text-left px-2 sm:px-4 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs md:text-sm font-medium transition nav-active touch-manipulation min-h-[40px] sm:min-h-[44px] min-w-0 flex items-center space-x-2 sm:space-x-3";
                 }
             }
             
@@ -860,7 +860,7 @@ Run a structured Chain-of-Thought debugging trace:<br>
             if (!container) return;
 
             const toast = document.createElement('div');
-            toast.className = "bg-slate-900 text-slate-100 px-4 py-3 rounded-xl shadow-lg text-xs font-semibold border border-slate-800 pointer-events-auto toast-animate flex items-center space-x-2";
+            toast.className = "bg-slate-950 text-slate-100 px-4 py-3 rounded-xl shadow-lg text-xs font-semibold border border-slate-800 pointer-events-auto toast-animate flex items-center space-x-2";
             toast.innerHTML = `
                 <svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
