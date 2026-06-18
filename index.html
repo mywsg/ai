@@ -1,1 +1,777 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PQA Automation & AI E-Learning Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pqa: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            500: '#475569',
+                            600: '#334155',
+                            700: '#1e293b',
+                            800: '#0f172a',
+                            900: '#020617',
+                        },
+                        brand: {
+                            orange: '#f97316',
+                            orangeHover: '#ea580c',
+                            softBg: '#fef8f4',
+                            border: '#ffedd5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .nav-active {
+            background-color: #fef8f4 !important;
+            color: #ea580c !important;
+            border-left: 4px solid #f97316 !important;
+            font-weight: 700 !important;
+        }
+        /* Mobile grid active item border override */
+        @media (max-width: 767px) {
+            .nav-active {
+                border-left: none !important;
+                border-bottom: 3px solid #f97316 !important;
+            }
+        }
+        .module-card-transition {
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .toast-animate {
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-brand-orange/20">
 
+    <!-- Custom Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <!-- Official MY World Logo Integration with local fallback -->
+                <div class="flex-shrink-0 bg-slate-50 p-1.5 rounded-xl border border-slate-100 shadow-xs">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRySB9rihzajzll-qcyUjyfeH-pZqoAcxOevw&s" 
+                         alt="MY World Logo" 
+                         class="h-11 sm:h-12 w-auto object-contain rounded-lg"
+                         onerror="this.onerror=null; this.src='https://placehold.co/120x48/f97316/ffffff?text=MY+World';">
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 leading-tight tracking-tight">Programmes & Quality Assurance</h1>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-semibold tracking-wide uppercase">Automation & AI-Assisted Tools</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container: Selection Menu (Left) | Actual Info Display (Right) -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col md:flex-row gap-6 md:gap-8">
+        
+        <!-- Sidebar Navigation (Selection Menu on the Left - Compact for Tablet, Full on Desktop) -->
+        <aside class="w-full md:w-64 lg:w-72 flex-shrink-0 min-w-0">
+            <!-- Tablet & Desktop: Vertical Sticky List | Mobile: Interactive Flow Grid -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 space-y-1 sm:space-y-2 md:sticky md:top-28 shadow-sm grid grid-cols-2 gap-2 md:block">
+                
+                <p class="col-span-2 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 md:mb-3 md:block hidden">Getting Started</p>
+                
+                <button onclick="switchTab('overview')" id="nav-overview" class="col-span-2 w-full text-left px-3 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-3 transition touch-manipulation min-h-[44px] min-w-0 nav-active">
+                    <svg class="w-5 h-5 flex-shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    <span class="sidebar-text flex-1 min-w-0 break-words whitespace-normal text-left">Overview</span>
+                </button>
+
+                <p class="col-span-2 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest pt-3 mb-1 md:mb-3 md:block hidden">Tools</p>
+
+                <!-- Tool Modules with Locked Horizontal alignment (same-line icon/badge) and wrap text -->
+                <button onclick="switchTab('automa')" id="nav-automa" class="w-full text-left px-3 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-3 transition touch-manipulation min-h-[44px] min-w-0">
+                    <span class="w-5 h-5 rounded-md bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center font-bold text-[10px] flex-shrink-0">A</span>
+                    <span class="sidebar-text flex-1 min-w-0 break-words whitespace-normal text-left">Automa</span>
+                </button>
+
+                <button onclick="switchTab('powerautomate')" id="nav-powerautomate" class="w-full text-left px-3 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-3 transition touch-manipulation min-h-[44px] min-w-0">
+                    <svg class="w-5 h-5 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 22h20L12 2z"></path>
+                    </svg>
+                    <span class="sidebar-text flex-1 min-w-0 break-words whitespace-normal text-left">Power Automate</span>
+                </button>
+
+                <button onclick="switchTab('vba')" id="nav-vba" class="w-full text-left px-3 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-3 transition touch-manipulation min-h-[44px] min-w-0">
+                    <svg class="w-5 h-5 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <span class="sidebar-text flex-1 min-w-0 break-words whitespace-normal text-left">Visual Basic for Applications (VBA)</span>
+                </button>
+
+                <button onclick="switchTab('gas')" id="nav-gas" class="w-full text-left px-3 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium text-slate-600 hover:bg-slate-50 flex items-center space-x-3 transition touch-manipulation min-h-[44px] min-w-0">
+                    <svg class="w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                    </svg>
+                    <span class="sidebar-text flex-1 min-w-0 break-words whitespace-normal text-left">Google Apps Script (GAS)</span>
+                </button>
+
+                <p class="col-span-2 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest pt-3 mb-1 md:mb-3 md:block hidden">Prompting Guide</p>
+
+                <button onclick="switchTab('builder')" id="nav-builder" class="col-span-2 w-full text-left px-3 sm:px-4 py-3.5 rounded-xl text-xs sm:text-sm font-bold bg-indigo-50/50 text-indigo-600 hover:bg-indigo-50 border border-indigo-100 flex items-center space-x-3 transition shadow-xs touch-manipulation min-h-[44px] min-w-0">
+                    <svg class="w-5 h-5 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    <span class="sidebar-text flex-1 min-w-0 break-words whitespace-normal text-left">Prompt Builder</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Content Area (Actual Info Screen on the Right) -->
+        <section class="flex-1 min-w-0">
+            
+            <!-- OVERVIEW TAB -->
+            <div id="tab-overview" class="space-y-6">
+                <div>
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-900 mb-4">Click any tool to learn about its features, then use the prompt builder to try the tool with Gen AI's assistance.</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                        
+                        <!-- Automa Dashboard Card -->
+                        <div onclick="switchTab('automa')" class="module-card-transition bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-brand-orange hover:shadow-md hover:-translate-y-0.5">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-bold text-slate-900 text-sm sm:text-base">Automa</h4>
+                                <div class="bg-slate-950 text-white w-7 h-7 rounded-lg flex items-center justify-center font-black text-xs shadow-xs">A</div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">A browser extension to automate tasks that require repetitive clicks on websites.</p>
+                            <span class="inline-flex items-center text-xs font-semibold text-brand-orange mt-4 hover:underline">View tool &rarr;</span>
+                        </div>
+
+                        <!-- Power Automate Card -->
+                        <div onclick="switchTab('powerautomate')" class="module-card-transition bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-brand-orange hover:shadow-md hover:-translate-y-0.5">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-bold text-slate-900 text-sm sm:text-base">Power Automate</h4>
+                                <svg class="w-6 h-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"></path></svg>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">A Microsoft tool that connects with OneDrive for Business applications to automate repetitive tasks within files in your drive.</p>
+                            <span class="inline-flex items-center text-xs font-semibold text-brand-orange mt-4 hover:underline">View tool &rarr;</span>
+                        </div>
+
+                        <!-- VBA Card -->
+                        <div onclick="switchTab('vba')" class="module-card-transition bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-brand-orange hover:shadow-md hover:-translate-y-0.5">
+                            <div class="flex items-center justify-between mb-3">
+                               <h4 class="font-bold text-slate-900 text-sm sm:text-base">Visual Basic for Applications (VBA)</h4>
+                                <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">A built-in coding tool within Microsoft Office to create custom shortcuts and automate repetitive tasks specifically within Excel and Word.</p>
+                            <span class="inline-flex items-center text-xs font-semibold text-brand-orange mt-4 hover:underline">View tool &rarr;</span>
+                        </div>
+
+                        <!-- GAS Card -->
+                        <div onclick="switchTab('gas')" class="module-card-transition bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-brand-orange hover:shadow-md hover:-translate-y-0.5">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-bold text-slate-900 text-sm sm:text-base">Google Apps Script (GAS)</h4>
+                                <svg class="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">A built-in coding tool within Google to automate tasks across Docs, Sheets and Gmail, and create webpages based on content within these files.</p>
+                            <span class="inline-flex items-center text-xs font-semibold text-brand-orange mt-4 hover:underline">View tool &rarr;</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODULE 1: AUTOMA TAB -->
+            <div id="tab-automa" class="space-y-6 hidden">
+                <div class="bg-white p-5 sm:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6 sm:space-y-8">
+                    <!-- Heading Header -->
+                    <div class="flex items-center space-x-3.5 border-b border-slate-100 pb-5">
+                        <div class="bg-slate-950 text-white w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center font-black text-lg sm:text-xl shadow-md shadow-slate-950/20">A</div>
+                        <div>
+                            <h2 class="text-lg sm:text-xl font-black text-slate-900">Automa</h2>
+                        </div>
+                    </div>
+
+                    <!-- 1. What is it? -->
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-1.5 h-4 bg-brand-orange rounded-full"></span>
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">What is it?</h3>
+                        </div>
+                        <ul class="list-disc pl-5 text-xs sm:text-sm text-slate-600 space-y-2 leading-relaxed">
+                            <li>A low-code/no-code browser extension to replace repetitive manual web-based tasks.</li>
+                            <li>Works on standard browsers like Chrome, Firefox and Edge.</li>
+                        </ul>
+                    </div>
+
+                    <!-- 2. How to Use It -->
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-1.5 h-4 bg-brand-orange rounded-full"></span>
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">How to Use It</h3>
+                        </div>
+                        <ul class="list-disc pl-5 text-xs sm:text-sm text-slate-600 space-y-2 leading-relaxed">
+                            <li>Install the free Automa extension inside your browser.</li>
+                            <li>Go to the Automa dashboard, click "New Workflow". then drag-and-drop blocks to build your workflow.</li>
+                            <li>Save your workflow, then run it.</li>
+                            <li>When in doubt, prompt Gen AI for help to walk you through how to use Automa.</li>
+                        </ul>
+                    </div>
+
+                    <!-- 3. Security & Governance -->
+                    <div class="border-t border-slate-100 pt-6 space-y-3">
+                        <h4 class="text-xs font-bold text-rose-800 uppercase tracking-widest flex items-center space-x-2 bg-rose-50 border border-rose-100 p-3 rounded-xl">
+                            <svg class="w-4 h-4 text-rose-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                            <span>Data Security & Governance</span>
+                        </h4>
+                        <ul class="text-xs sm:text-sm text-slate-600 space-y-2 list-disc pl-5 leading-relaxed">
+                            <li>Automa's workflow only runs on your laptop browser. It does not transmit information in downloaded files to external hosts.</li>
+                            <li>Configure Automa to run only on selected URLs.</li>
+                            <li>Always log in manually to a website before you run Automa's workflow.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Prompt Builder Call-to-action Button -->
+                    <div class="pt-2 flex justify-end">
+                        <button onclick="goToBuilder('Automa')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs transition uppercase flex items-center space-x-2 shadow-sm shadow-indigo-600/15">
+                            <span>⚡ Generate Automa Prompt</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODULE 2: POWER AUTOMATE TAB -->
+            <div id="tab-powerautomate" class="space-y-6 hidden">
+                <div class="bg-white p-5 sm:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6 sm:space-y-8">
+                    <!-- Heading Header -->
+                    <div class="flex items-center space-x-3.5 border-b border-slate-100 pb-5">
+                        <svg class="w-11 h-11 sm:w-12 sm:h-12 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"></path></svg>
+                        <div>
+                            <h2 class="text-lg sm:text-xl font-black text-slate-900">Power Automate</h2>
+                        </div>
+                    </div>
+
+                    <!-- 1. What is it? -->
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-1.5 h-4 bg-brand-orange rounded-full"></span>
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">What is it?</h3>
+                        </div>
+                        <ul class="list-disc pl-5 text-xs sm:text-sm text-slate-600 space-y-2 leading-relaxed">
+                            <li>A low-code/no-code app that connects different apps & services within Microsoft 365.</li>
+                            <li>You tell it to spot an action (e.g. change in a file), then carry out a sequence of other actions, then it repeats the steps every time.</li>
+                            <li>You can run it manually when needed, or schedule runs.</li>
+                        </ul>
+                    </div>
+
+                    <!-- 2. How to Use It -->
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-1.5 h-4 bg-brand-orange rounded-full"></span>
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">How to Use It</h3>
+                        </div>
+                        <ul class="list-disc pl-5 text-xs sm:text-sm text-slate-600 space-y-2 leading-relaxed">
+                            <li>Log in to your corporate M365 account and select Power Automate.</li>
+                            <li>Create a cloud flow using an initial trigger, logic blocks and follow-on actions.</li>
+                            <li>When in doubt, prompt Gen AI for help to walk you through how to use Power Automate.</li>
+                        </ul>
+                    </div>
+
+                    <!-- 3. Security & Governance -->
+                    <div class="border-t border-slate-100 pt-6 space-y-3">
+                        <h4 class="text-xs font-bold text-rose-800 uppercase tracking-widest flex items-center space-x-2 bg-rose-50 border border-rose-100 p-3 rounded-xl">
+                            <svg class="w-4 h-4 text-rose-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                            <span>Data Security & Governance</span>
+                        </h4>
+                        <ul class="text-xs sm:text-sm text-slate-600 space-y-2 list-disc pl-5 leading-relaxed">
+                            <li>The app is included  within MYW’s M365 free Education license.</li>
+                            <li>It only connects to MYW M365 business apps, which keeps data secure.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Prompt Builder Call-to-action Button -->
+                    <div class="pt-2 flex justify-end">
+                        <button onclick="goToBuilder('Power Automate')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs transition uppercase flex items-center space-x-2 shadow-sm shadow-indigo-600/15">
+                            <span>⚡ Generate Power Automate Prompt</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODULE 3: VBA TAB -->
+            <div id="tab-vba" class="space-y-6 hidden">
+                <div class="bg-white p-5 sm:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6 sm:space-y-8">
+                    <!-- Heading Header -->
+                    <div class="flex items-center space-x-3.5 border-b border-slate-100 pb-5">
+                        <svg class="w-11 h-11 sm:w-12 sm:h-12 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <div>
+                            <h2 class="text-lg sm:text-xl font-black text-slate-900">Visual Basic for Applications (VBA)</h2>
+                        </div>
+                    </div>
+
+                    <!-- 1. What is it? -->
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-1.5 h-4 bg-brand-orange rounded-full"></span>
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">What is it?</h3>
+                        </div>
+                        <ul class="list-disc pl-5 text-xs sm:text-sm text-slate-600 space-y-2 leading-relaxed">
+                            <li>Microsoft's event-driven programming language built into Excel, which is used to programme Macros.</li>
+                        </ul>
+                    </div>
+
+                    <!-- 32. How to Use It -->
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-1.5 h-4 bg-brand-orange rounded-full"></span>
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">How to Use It</h3>
+                        </div>
+                        <ul class="list-disc pl-5 text-xs sm:text-sm text-slate-600 space-y-2 leading-relaxed">
+                            <li>Tell Gen AI how you want to format your data and ask it to create a VBA code.</li>
+                            <li>Set up your file according to what Gen AI tells you.</li>
+                            <li>Paste the code in the Developer tab > VBA, then run the macro.</li>
+                            <li>When in doubt, prompt Gen AI for help to walk you through how to use VBA.</li>
+
+                        </ul>
+                    </div>
+
+                    <!-- 3. Security & Governance -->
+                    <div class="border-t border-slate-100 pt-6 space-y-3">
+                        <h4 class="text-xs font-bold text-rose-800 uppercase tracking-widest flex items-center space-x-2 bg-rose-50 border border-rose-100 p-3 rounded-xl">
+                            <svg class="w-4 h-4 text-rose-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                            <span>Data Security & Governance</span>
+                        </h4>
+                        <ul class="text-xs sm:text-sm text-slate-600 space-y-2 list-disc pl-5 leading-relaxed">
+                            <li>VBA runs within files in your laptop. It does not transmit data to external hosts.</li>
+                            <li>The Developer tab is not available in the M365 free Education license. You have to upgrade your license to use this tool. <strong>Request upgrade to M365 Premium through Pillar Heads → Pillar Heads to put up request to MIS.</strong></li>
+                        </ul>
+                    </div>
+
+                    <!-- Prompt Builder Call-to-action Button -->
+                    <div class="pt-2 flex justify-end">
+                        <button onclick="goToBuilder('Visual Basic for Applications (VBA)')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs transition uppercase flex items-center space-x-2 shadow-sm shadow-indigo-600/15">
+                            <span>⚡ Generate VBA Prompt</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODULE 4: GAS TAB -->
+            <div id="tab-gas" class="space-y-6 hidden">
+                <div class="bg-white p-5 sm:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6 sm:space-y-8">
+                    <!-- Heading Header -->
+                    <div class="flex items-center space-x-3.5 border-b border-slate-100 pb-5">
+                        <svg class="w-11 h-11 sm:w-12 sm:h-12 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        <div>
+                            <h2 class="text-lg sm:text-xl font-black text-slate-900">Google Apps Script (GAS)</h2>
+                        </div>
+                    </div>
+
+                    <!-- 1. What is it? -->
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-1.5 h-4 bg-brand-orange rounded-full"></span>
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">What is it?</h3>
+                        </div>
+                        <ul class="list-disc pl-5 text-xs sm:text-sm text-slate-600 space-y-2 leading-relaxed">
+                            <li>Built-in engine developed by Google to automate tasks and build webpages for Google-based files.</li>
+                        </ul>
+                    </div>
+
+                    <!-- 2. How to Use It -->
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-1.5 h-4 bg-brand-orange rounded-full"></span>
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">How to Use It</h3>
+                        </div>
+                        <ul class="list-disc pl-5 text-xs sm:text-sm text-slate-600 space-y-2 leading-relaxed">
+                            <li>Tell Gen AI how you want to format your data and ask it to create a GAS code.</li>
+                            <li>Open your Google Sheet and click *Extensions > Apps Script* from the top header menu.</li>
+                            <li>Paste the code in the tab, then deploy it.</li>
+                            <li>When in doubt, prompt Gen AI for help to walk you through how to use GAS.</li>
+                        </ul>
+                    </div>
+
+                    <!-- 3. Security & Governance -->
+                    <div class="border-t border-slate-100 pt-6 space-y-3">
+                        <h4 class="text-xs font-bold text-rose-800 uppercase tracking-widest flex items-center space-x-2 bg-rose-50 border border-rose-100 p-3 rounded-xl">
+                            <svg class="w-4 h-4 text-rose-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                            <span>Data Security & Governance</span>
+                        </h4>
+                        <ul class="text-xs sm:text-sm text-slate-600 space-y-2 list-disc pl-5 leading-relaxed">
+                            <li>Restrict GAS permission to read data only on the file you are using, to protect data contained in other Google Drive files.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Prompt Builder Call-to-action Button -->
+                    <div class="pt-2 flex justify-end">
+                        <button onclick="goToBuilder('Google Apps Script (GAS)')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs transition uppercase flex items-center space-x-2 shadow-sm shadow-indigo-600/15">
+                            <span>⚡ Generate Apps Script Prompt</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DYNAMIC PROMPT BUILDER -->
+            <div id="tab-builder" class="space-y-6 hidden">
+                <div class="bg-white p-5 sm:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6">
+                    
+                    <!-- Header -->
+                    <div class="border-b border-slate-100 pb-5">
+                        <h2 class="text-lg sm:text-xl font-black text-slate-900 flex items-center space-x-2">
+                            <svg class="w-6 h-6 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <span>Prompt Builder</span>
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-1">Select your tool and enter your details to build optimised prompts.</p>
+                    </div>
+
+                    <!-- Single Column Vertical Stream Layout -->
+                    <div class="max-w-4xl mx-auto space-y-8">
+                        
+                        <!-- Block 1: Tool Dropdown Selector & 4-Step Input Form -->
+                        <div class="space-y-6 bg-slate-50/50 p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs">
+                            
+                            <!-- Tool Dropdown Selector -->
+                            <div class="bg-white p-4 rounded-xl border border-slate-200">
+                                <label for="builder-tech-select" class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Select Tool</label>
+                                <select id="builder-tech-select" onchange="onSelectTechDropdown(this.value)" class="w-full bg-white border border-slate-300 text-slate-800 rounded-xl p-3 text-xs sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none transition cursor-pointer shadow-sm touch-manipulation">
+                                    <option value="Automa">Automa</option>
+                                    <option value="Power Automate">Power Automate</option>
+                                    <option value="Visual Basic for Applications (VBA)">Visual Basic for Applications (VBA)</option>
+                                    <option value="Google Apps Script (GAS)">Google Apps Script (GAS)</option>
+                                </select>
+                            </div>
+
+                            <!-- 4 Numbered Input Steps -->
+                            <div class="space-y-5">
+                                
+                                <!-- Step 1: Context -->
+                                <div class="space-y-1.5">
+                                    <label class="text-xs font-bold text-slate-700 flex items-center space-x-2">
+                                        <span class="w-5 h-5 bg-indigo-50 border border-indigo-200 text-indigo-700 text-[10px] rounded-lg flex items-center justify-center font-bold flex-shrink-0">1</span>
+                                        <span class="uppercase tracking-wider">Context</span>
+                                    </label>
+                                    <p class="text-[10px] text-slate-400 font-medium">Describe the current problem you face or details of your current files.</p>
+                                    <textarea id="prompt-context" oninput="buildPrompt()" rows="2" class="w-full bg-white border border-slate-200 text-slate-700 rounded-xl p-3 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none font-sans leading-relaxed transition shadow-inner" placeholder="e.g. Downloading centre attendance reports from the Taidii portal for 57 childcare centres..."></textarea>
+                                </div>
+
+                                <!-- Step 2: Task -->
+                                <div class="space-y-1.5">
+                                    <label class="text-xs font-bold text-slate-700 flex items-center space-x-2">
+                                        <span class="w-5 h-5 bg-indigo-50 border border-indigo-200 text-indigo-700 text-[10px] rounded-lg flex items-center justify-center font-bold flex-shrink-0">2</span>
+                                        <span class="uppercase tracking-wider">Task</span>
+                                    </label>
+                                    <p class="text-[10px] text-slate-400 font-medium">Detail what you want the tool to do.</p>
+                                    <textarea id="prompt-task" oninput="buildPrompt()" rows="3" class="w-full bg-white border border-slate-200 text-slate-700 rounded-xl p-3 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none font-sans leading-relaxed transition shadow-inner" placeholder="e.g. Loop through the centre list, click download, and return to the main dashboard..."></textarea>
+                                </div>
+
+                                <!-- Step 3: Output -->
+                                <div class="space-y-1.5">
+                                    <label class="text-xs font-bold text-slate-700 flex items-center space-x-2">
+                                        <span class="w-5 h-5 bg-indigo-50 border border-indigo-200 text-indigo-700 text-[10px] rounded-lg flex items-center justify-center font-bold flex-shrink-0">3</span>
+                                        <span class="uppercase tracking-wider">Output</span>
+                                    </label>
+                                    <p class="text-[10px] text-slate-400 font-medium">Describe how you would like Gen AI to present the output.</p>
+                                    <textarea id="prompt-output" oninput="buildPrompt()" rows="2" class="w-full bg-white border border-slate-200 text-slate-700 rounded-xl p-3 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none font-sans leading-relaxed transition shadow-inner" placeholder="e.g. A step-by-step block diagram of selectors and delay variables, with a sample JSON template..."></textarea>
+                                </div>
+
+                                <!-- Step 4: Operating System & Licence -->
+                                <div class="space-y-1.5">
+                                    <label class="text-xs font-bold text-slate-700 flex items-center space-x-2">
+                                        <span class="w-5 h-5 bg-indigo-50 border border-indigo-200 text-indigo-700 text-[10px] rounded-lg flex items-center justify-center font-bold flex-shrink-0">4</span>
+                                        <span class="uppercase tracking-wider">Operating System & License</span>
+                                    </label>
+                                    <p class="text-[10px] text-slate-400 font-medium">State your Operating System and License.</p>
+                                    <input type="text" id="prompt-os" oninput="buildPrompt()" class="w-full bg-white border border-slate-200 text-slate-700 rounded-xl p-3 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none font-sans transition shadow-inner" placeholder="e.g. Windows laptop with a free M365 Education licence">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Block 2: Compiled Dynamic Prompt Output -->
+                        <div class="bg-slate-900 text-slate-100 rounded-2xl p-5 sm:p-6 flex flex-col justify-between shadow-md border border-slate-800 space-y-4">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                                    <span class="text-xs font-bold text-brand-orange uppercase tracking-wider">Compiled Prompt</span>
+                                </div>
+                                
+                                <!-- Live Output Container -->
+                                <div id="output-text" class="text-[11px] sm:text-xs font-mono leading-relaxed whitespace-pre-wrap select-all max-h-[220px] md:max-h-[280px] overflow-y-auto text-slate-300 pr-1 scrollbar-thin">
+                                    <!-- Dynamically generated -->
+                                </div>
+                            </div>
+
+                            <div class="pt-2 border-t border-slate-800">
+                                <button onclick="copyToClipboard('output-text')" class="w-full bg-gradient-to-r from-brand-orange to-amber-600 hover:from-brand-orangeHover hover:to-amber-700 text-white font-extrabold py-3.5 px-4 rounded-xl text-xs transition uppercase tracking-wider shadow-sm shadow-brand-orange/20 touch-manipulation">
+                                    Copy Compiled Prompt
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Block 3: Pre-packaged Troubleshooting & Style Helper Prompts -->
+                        <div class="space-y-4 bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+                            <div class="border-b border-slate-100 pb-3">
+                                <h4 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">Additional Prompts</h4>
+                            </div>
+
+                            <!-- Persona Configuration Template -->
+                            <div class="space-y-2 border-b border-slate-100 pb-4">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wide">Configure Persona</span>
+                                    <button onclick="copyToClipboard('helper-style-text')" class="text-[10px] font-bold text-indigo-600 hover:underline flex items-center space-x-1">
+                                        <span>Copy Prompt</span>
+                                        <span>&rarr;</span>
+                                    </button>
+                                </div>
+                                <p class="text-[10px] text-slate-400">Add this prompt to give Gen AI further context to generate more effective output.</p>
+                                <div id="helper-style-text" class="text-[10px] font-mono bg-slate-50 p-2.5 rounded-lg text-slate-600 border border-slate-100 max-h-[100px] overflow-y-auto leading-relaxed">[SYSTEM ROLE]<br>
+Act as an elite full-stack developer, UX/UI architect, and enterprise automation engineer.<br><br>
+
+[OPERATIONAL PROTOCOLS]<br>
+1. Write cleanly structured, comment-guided code with verbose parameter definitions.<br>
+2. Ensure strict error handling is integrated locally; explain structural elements clearly.<br>
+3. CRITICAL: Let me review specific recommendations first. Confirm all adjustments with me before rewriting blocks.<br>
+4. Execute ONLY the designated adjustments inside current scripts to prevent excessive or disruptive AI edits. Maintain code safety boundaries.</div>
+                            </div>
+
+                            <!-- Error Debugging Template -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[10px] font-bold text-rose-500 uppercase tracking-wide">Error Troubleshooting</span>
+                                    <button onclick="copyToClipboard('helper-debug-text')" class="text-[10px] font-bold text-rose-600 hover:underline flex items-center space-x-1">
+                                        <span>Copy Prompt</span>
+                                        <span>&rarr;</span>
+                                    </button>
+                                </div>
+                                <div id="helper-debug-text" class="text-[10px] font-mono bg-slate-50 p-2.5 rounded-lg text-slate-600 border border-slate-100 max-h-[100px] overflow-y-auto leading-relaxed">[DIAGNOSTIC REQUEST]<br>
+I have encountered an error using [insert tool].<br><br>
+
+[ERROR CONTEXT]<br>
+Active Log / Exception snippet: [Describe the behaviour or insert log here]<br><br>
+
+[INSTRUCTIONS]<br>
+Run a structured Chain-of-Thought debugging trace:<br>
+1. Root-Cause Analysis: Identify why the block failed.<br>
+2. System Check: Verify if local M365 free Education License policies or browser permissions restrict this specific process.<br>
+3. Secure Resolution: Draft the minimal corrected code block.<br>
+4. Step-by-Step Patching: Explain where to apply the correction in the workspace.<br></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Page Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 sm:mt-16 py-6 sm:py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between text-[11px] sm:text-xs text-slate-400 gap-4">
+            <p class="text-center sm:text-left">&copy; 2026 M.Y. World Programmes and Quality Assurance</p>
+            <p class="flex items-center space-x-1 text-slate-500">
+                <!-- AFTER (Updated Code) -->
+<span>Developed by <a href="mailto:stacy.wong@myworld.org.sg" class="text-brand-orange hover:text-brand-orangeHover hover:underline font-semibold transition">Stacy Wong</a></span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Portal JavaScript Controls -->
+    <script>
+        // Preset values mapped to slide deck content to populate the 4 steps of the builder
+        const toolPresets = {
+            "Automa": {
+                context: "I download monthly attendance reports from the Taidii portal for 57 childcare centres. The portal requires me to enter a centre’s dashboard page, click 'Download Attendance PDF', exit back to the main dashboard, and click the next centre. It does not allow me to open multiple tabs.",
+                task: "Build a local browser automation workflow in the Automa extension.",
+                output: "Draft a step-by-step block construction layout in Automa (detailing triggers, variables, text selectors, and loops) to process this action recursively without me having to open multiple tabs.",
+                os: "Windows 11 Laptop - Free M365 Education License"
+            },
+            "Power Automate": {
+                context: "I have an Excel file on Sharepoint that contains information on 57 centres, their Principals' names, and their Principals' emails. I need to send acknowledmgent emails to each centre after I have checked if their files are verified. If files are verified, I will change the Verification Status column to *Verified*. Otherwise, the Verification Status column will show *Pending*.",
+                task: "Set up an automated cloud workflow inside Power Automate. It should send acknowledgement emails to centres with Verification Status as *Verified*.",
+                output: "Provide a list of the required connectors, trigger nodes, system variables, and a conditional logic diagram setup. Include the dynamic content email text template that utilises centre names and columns as variables.",
+                os: "Windows 11 Laptop - Free M365 Education License"
+            },
+            "Visual Basic for Applications (VBA)": {
+                context: "I have 57 centre attendance sheets in a local folder. Each is named '<centre name>_May attendance.xlsx'.",
+                task: "Code a VBA macro for Microsoft Excel to do the following:\n1. Extract the 'All' tab from each file in the folder and place it in a master file.\n2. Rename each of the 'All' tabs in the master file dynamically according to the centre's name.\n3. Find the merged column named 'Total Attendance'. If the value is 0, highlight the entire row in yellow.",
+                output: "Write a clean, commented, and error-resistant VBA script macro with step-by-step Developer Tab installation instructions.",
+                os: "Windows 11 Laptop - Free M365 Education Licence"
+            },
+            "Google Apps Script (GAS)": {
+                context: "We manage teacher relief assignments within a Google sheet. The master tracking rows contain column headers 'Teacher Name', 'Status', and 'Relief Centre'.",
+                task: "Develop a JavaScript-based Google Apps Script (GAS) to run as a web app. The script should read rows from the master spreadsheet and serve them cleanly on a secure visual public dashboard page so staff can search relief assignments safely.",
+                output: "Provide the Code.gs backend code (doGet function returning HtmlService object), a clean Tailwind CSS layout interface to display data items, and details on setting container limits using the @OnlyCurrentDoc safety rule.",
+                os: "Windows 11 Laptop - Free Google organisation workspace"
+            }
+        };
+
+        // Tab Switching Logic with state preservation
+        function switchTab(tabId) {
+            // Hide all tab screens
+            document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden'));
+            
+            // Show the target active screen
+            const activeTab = document.getElementById('tab-' + tabId);
+            if (activeTab) {
+                activeTab.classList.remove('hidden');
+            }
+
+            // Remove nav-active styling states from all navigation buttons
+            document.querySelectorAll('[id^="nav-"]').forEach(el => {
+                el.classList.remove('nav-active');
+            });
+            
+            // Apply nav-active styling to the selected button
+            const activeNav = document.getElementById('nav-' + tabId);
+            if (activeNav) {
+                activeNav.classList.add('nav-active');
+            }
+            
+            // Scroll back to top for optimal viewport experience
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Dropdown selection routing inside the builder
+        function onSelectTechDropdown(techValue) {
+            populateFormPresets(techValue);
+            buildPrompt();
+        }
+
+        // Quick link to load specific tool straight from module view
+        function goToBuilder(techName) {
+            switchTab('builder');
+            
+            const selectEl = document.getElementById('builder-tech-select');
+            if (selectEl) {
+                selectEl.value = techName;
+            }
+            
+            populateFormPresets(techName);
+            buildPrompt();
+            showToast("Loaded " + techName + " Presets in Builder");
+        }
+
+        // Pre-fill the 4-step inputs based on chosen tool
+        function populateFormPresets(techName) {
+            const preset = toolPresets[techName];
+            if (preset) {
+                document.getElementById('prompt-context').value = preset.context;
+                document.getElementById('prompt-task').value = preset.task;
+                document.getElementById('prompt-output').value = preset.output;
+                document.getElementById('prompt-os').value = preset.os;
+            }
+        }
+
+        // Dynamic prompt compiler logic
+        function buildPrompt() {
+            const selectEl = document.getElementById('builder-tech-select');
+            const tech = selectEl ? selectEl.value : "Automa";
+            
+            const contextVal = document.getElementById('prompt-context').value.trim();
+            const taskVal = document.getElementById('prompt-task').value.trim();
+            const outputVal = document.getElementById('prompt-output').value.trim();
+            const osVal = document.getElementById('prompt-os').value.trim();
+
+            let compiledText = "";
+
+            // Format dynamic prompt segments with clear markdown tagging for Gemini
+            compiledText += `### TOOL: ${tech.toUpperCase()}\n\n`;
+            compiledText += `[CONTEXT]\n${contextVal || "No context defined."}\n\n`;
+            compiledText += `[TASK]\n${taskVal || "No task defined."}\n\n`;
+            compiledText += `[OUTPUT]\n${outputVal || "No expected output format defined."}\n\n`;
+            compiledText += `[ENVIRONMENT]\nOperating System / Account License: ${osVal || "Unspecified"}\n\n`;
+            compiledText += `[INSTRUCTION]\nPlease act as an expert developer. Provide clean, comment-guided code, explain your selector rules or variable paths thoroughly, and detail step-by-step instructions to use this tool. The instructions should be written in a way that a non-tech person can understand.`;
+
+            // Display live generated output
+            document.getElementById('output-text').innerText = compiledText;
+        }
+
+        // Clipboard Copy Utility (Safe command copy fallback)
+        function copyToClipboard(elementId) {
+            const textNode = document.getElementById(elementId);
+            if (!textNode) return;
+
+            // Handle selection and execution safely inside restricted environments
+            const range = document.createRange();
+            range.selectNode(textNode);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+            
+            showToast("Prompt copied to clipboard! Paste directly into Gemini.");
+        }
+
+        // Custom Toast notification utility
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = "bg-slate-900 text-slate-100 px-4 py-3 rounded-xl shadow-lg text-xs font-semibold border border-slate-800 pointer-events-auto toast-animate flex items-center space-x-2";
+            toast.innerHTML = `
+                <svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('toast-animate');
+                toast.classList.add('opacity-0', 'transition-all', 'duration-300');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize portal pre-loaded configurations on window load
+        window.onload = function() {
+            populateFormPresets('Automa');
+            buildPrompt();
+        }
+    </script>
+</body>
+</html>
