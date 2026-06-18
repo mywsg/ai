@@ -522,6 +522,7 @@
                                 <div class="bg-white p-4 rounded-xl border border-slate-200">
                                     <label for="builder-tech-select" class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Select Tool</label>
                                     <select id="builder-tech-select" onchange="onSelectTechDropdown(this.value)" class="w-full bg-white border border-slate-300 text-slate-800 rounded-xl p-3 text-xs sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none transition cursor-pointer shadow-sm touch-manipulation">
+                                        <option value="Recommendations">I want Gen AI to recommend tools</option>
                                         <option value="Automa">Automa</option>
                                         <option value="Power Automate">Power Automate</option>
                                         <option value="Visual Basic for Applications (VBA)">Visual Basic for Applications (VBA)</option>
@@ -596,7 +597,7 @@
                             </div>
 
                             <!-- Block 3: Pre-packaged Troubleshooting & Style Helper Prompts -->
-                            <div class="space-y-4 bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+                            <div id="additional-prompts-container" class="space-y-4 bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
                                 <div class="border-b border-slate-100 pb-3">
                                     <h4 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">Additional Prompts</h4>
                                 </div>
@@ -610,7 +611,7 @@
                                             <span>&rarr;</span>
                                         </button>
                                     </div>
-                                    <p class="text-[10px] text-slate-400">Add this prompt to give Gen AI further context to generate more effective output.</p>
+                                    <p class="text-[10px] text-slate-400">Enter this prompt to excute changes to optimise the design of your output.</p>
                                     <div id="helper-style-text" class="text-[10px] font-mono bg-slate-50 p-2.5 rounded-lg text-slate-600 border border-slate-100 max-h-[100px] overflow-y-auto leading-relaxed">[SYSTEM ROLE]<br>
 Act as an elite full-stack developer, UX/UI architect, and enterprise automation engineer.<br><br>
 
@@ -630,6 +631,7 @@ Act as an elite full-stack developer, UX/UI architect, and enterprise automation
                                             <span>&rarr;</span>
                                         </button>
                                     </div>
+                                    <p class="text-[10px] text-slate-400">Enter this prompt to fix errors.</p>
                                     <div id="helper-debug-text" class="text-[10px] font-mono bg-slate-50 p-2.5 rounded-lg text-slate-600 border border-slate-100 max-h-[100px] overflow-y-auto leading-relaxed">[DIAGNOSTIC REQUEST]<br>
 I have encountered an error using [insert tool].<br><br>
 
@@ -683,55 +685,61 @@ Run a structured Chain-of-Thought debugging trace:<br>
                 context: "I have 57 centre attendance sheets in a local folder. Each is named '<centre name>_May attendance.xlsx'.",
                 task: "Code a VBA macro for Microsoft Excel to do the following:\n1. Extract the 'All' tab from each file in the folder and place it in a master file.\n2. Rename each of the 'All' tabs in the master file dynamically according to the centre's name.\n3. Find the merged column named 'Total Attendance'. If the value is 0, highlight the entire row in yellow.",
                 output: "Write a clean, commented, and error-resistant VBA script macro with step-by-step Developer Tab installation instructions.",
-                os: "Windows 11 Laptop - Free M365 Education Licence"
+                os: "Windows 11 Laptop - Free M365 Education License"
             },
             "Google Apps Script": {
                 context: "We manage teacher relief assignments within a Google sheet. The master tracking rows contain column headers 'Teacher Name', 'Status', and 'Relief Centre'.",
                 task: "Develop a JavaScript-based Google Apps Script (GAS) to run as a web app. The script should read rows from the master spreadsheet and serve them cleanly on a secure visual public dashboard page so staff can search relief assignments safely.",
                 output: "Provide the Code.gs backend code (doGet function returning HtmlService object), a clean Tailwind CSS layout interface to display data items, and details on setting container limits using the @OnlyCurrentDoc safety rule.",
                 os: "Windows 11 Laptop - Free Google organisation workspace"
+            },
+            "Recommendations": {
+                context: "I have been downloading 57 files manually from Taidii every month. The problem is that Taidii requires me to make multiple clicks to a centre’s page, click download, then exit the centre’s page to the main dashboard, before it allows you to click the next centre. It does not allow me to open multiple tabs.",
+                task: "Recommend me low or no-code free tools that I can use to help me with this process, then walk me through the pros and cons of these tools. Only proceed to give me further details of how to use the tool after I have chosen which tool I want.",
+                output: "Provide a succinct numbered list of tools. Present the pros and cons of each tool in a table.",
+                os: "Windows 11 Laptop - Free M365 Education License"
             }
         };
 
         // --- PASSWORD PROTECTION MODULE ---
-       const CORRECT_PASSWORD_HASH = "88741655";
+        const CORRECT_PASSWORD_HASH = "88741655";
 
-// Offline-safe hashing function that does not rely on browser crypto.subtle APIs
-function localHash(str) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = (hash << 5) - hash + char;
-        hash = hash & hash; // Convert to a 32-bit integer
-    }
-    return (hash >>> 0).toString(16);
-}
-
-// Synchronous password verification routine
-    function verifyPassword() {
-        const passwordInput = document.getElementById('portal-password').value;
-        const errorMsg = document.getElementById('login-error-msg');
-        
-        // Hash the entered password using our local function
-        const hashedInput = localHash(passwordInput);
-
-        if (hashedInput === CORRECT_PASSWORD_HASH) {
-            // Unlock the screen
-            document.getElementById('login-overlay').classList.add('hidden');
-            document.getElementById('main-app-content').classList.remove('hidden');
-            
-            // Retain session login state
-            sessionStorage.setItem('pqa_portal_unlocked', 'true');
-            showToast("Welcome to the PQA Automation Portal!");
-        } else {
-            // Display incorrect prompt and reset input field
-            errorMsg.classList.remove('hidden');
-            const inputField = document.getElementById('portal-password');
-            inputField.value = "";
-            inputField.classList.add('border-rose-300', 'bg-rose-50/50');
-            inputField.focus();
+        // Offline-safe hashing function that does not rely on browser crypto.subtle APIs
+        function localHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = (hash << 5) - hash + char;
+                hash = hash & hash; // Convert to a 32-bit integer
+            }
+            return (hash >>> 0).toString(16);
         }
-    }
+
+        // Synchronous password verification routine
+        function verifyPassword() {
+            const passwordInput = document.getElementById('portal-password').value;
+            const errorMsg = document.getElementById('login-error-msg');
+            
+            // Hash the entered password using our local function
+            const hashedInput = localHash(passwordInput);
+
+            if (hashedInput === CORRECT_PASSWORD_HASH) {
+                // Unlock the screen
+                document.getElementById('login-overlay').classList.add('hidden');
+                document.getElementById('main-app-content').classList.remove('hidden');
+                
+                // Retain session login state
+                sessionStorage.setItem('pqa_portal_unlocked', 'true');
+                showToast("Welcome to the PQA Automation Portal!");
+            } else {
+                // Display incorrect prompt and reset input field
+                errorMsg.classList.remove('hidden');
+                const inputField = document.getElementById('portal-password');
+                inputField.value = "";
+                inputField.classList.add('border-rose-300', 'bg-rose-50/50');
+                inputField.focus();
+            }
+        }
 
         // Tab Switching Logic with state preservation
         function switchTab(tabId) {
@@ -787,6 +795,16 @@ function localHash(str) {
                 document.getElementById('prompt-task').value = preset.task;
                 document.getElementById('prompt-output').value = preset.output;
                 document.getElementById('prompt-os').value = preset.os;
+            }
+
+            // Toggle additional prompts visibility for "Recommendations"
+            const additionalPromptsContainer = document.getElementById('additional-prompts-container');
+            if (additionalPromptsContainer) {
+                if (techName === 'Recommendations') {
+                    additionalPromptsContainer.classList.add('hidden');
+                } else {
+                    additionalPromptsContainer.classList.remove('hidden');
+                }
             }
         }
 
@@ -854,7 +872,7 @@ function localHash(str) {
 
         // Initialize portal pre-loaded configurations on window load
         window.onload = function() {
-            populateFormPresets('Automa');
+            populateFormPresets('Recommendations');
             buildPrompt();
 
             // Check if user already logged in during this active browser session
